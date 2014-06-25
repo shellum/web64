@@ -1,0 +1,29 @@
+@(data: String)
+<html>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+
+    $(function() {
+        $("#encode").click(encode);
+        $("#decode").click(decode);
+    });
+
+    function encode() {
+        $.post( "/encode", { data: $("#data").val() },function( data ) {
+            $("#data").val(data)
+        });
+    }
+    function decode() {
+        $.post( "/decode", { data: $("#data").val() },function( data ) {
+            $("#data").val(data)
+        });
+    }
+
+
+</script>
+<form id="form" method="post" action="/">
+    <textarea name="data" id="data">@data</textarea>
+    <input type="button" id="encode" value="Encode"/>
+    <input type="button" id="decode" value="Decode"/>
+</form>
+</html>
