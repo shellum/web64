@@ -1,29 +1,40 @@
 @(data: String)
 <html>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="assets/stylesheets/main.css">
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script>
 
-    $(function() {
+    $(function () {
         $("#encode").click(encode);
         $("#decode").click(decode);
     });
 
     function encode() {
-        $.post( "/encode", { data: $("#data").val() },function( data ) {
+        $.post("/encode", { data: $("#data").val() }, function (data) {
             $("#data").val(data)
         });
     }
     function decode() {
-        $.post( "/decode", { data: $("#data").val() },function( data ) {
+        $.post("/decode", { data: $("#data").val() }, function (data) {
             $("#data").val(data)
         });
     }
 
 
 </script>
-<form id="form" method="post" action="/">
-    <textarea name="data" id="data">@data</textarea>
-    <input type="button" id="encode" value="Encode"/>
-    <input type="button" id="decode" value="Decode"/>
-</form>
+<div id="content">
+    <p class="title">Web64</p>
+    <p class="subtitle">Web Safe Base64</p>
+
+    <form id="form" method="post" action="/">
+        <textarea name="data" id="data">@data</textarea>
+
+        <div id="controls">
+            <input type="button" class="btn btn-default navbar-btn" id="encode" value="Encode"/>
+            <input type="button" class="btn btn-default navbar-btn" id="decode" value="Decode"/>
+        </div>
+    </form>
+</div>
 </html>

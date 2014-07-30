@@ -1,0 +1,5 @@
+textarea { float:left;height:500px; width:500px;}
+#controls {float:left;clear:both;}
+.title {font-size:x-large}
+.subtitle {font-size:medium}
+#content {width:800px; align:center;margin:auto}

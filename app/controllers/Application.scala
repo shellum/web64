@@ -9,7 +9,7 @@ import play.api.data.Forms._
 object Application extends Controller {
 
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Ok(views.html.index("Enter text here for web safe base64 encoding/decoding."))
   }
 
   def encode = Action { implicit request =>
