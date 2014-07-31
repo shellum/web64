@@ -1,5 +1,5 @@
-textarea { float:left;height:500px; width:500px;}
-#controls {float:left;clear:both;}
-.title {font-size:x-large}
-.subtitle {font-size:medium}
-#content {width:800px; align:center;margin:auto}
+textarea { float:left; height:200px; width:800px;}
+#controls {float:left; clear:both;}
+.title {font-size:x-large; color:#007}
+.subtitle {font-size:medium; color:#007}
+#content {width:800px; margin:10px auto 0px auto}
