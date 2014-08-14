@@ -6,7 +6,8 @@ libraryDependencies ++= Seq(
   jdbc,
   anorm,
   cache,
-  "commons-codec" % "commons-codec" % "1.6"
+  "commons-codec" % "commons-codec" % "1.6",
+  "redis.clients" % "jedis" % "2.5.2"
 )     
 
 play.Project.playScalaSettings

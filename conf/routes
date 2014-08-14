@@ -1,13 +1,10 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
-
-# Home page
 GET     /                           controllers.Application.index
 POST    /encode                     controllers.Application.encode
 POST    /decode                     controllers.Application.decode
-
-# Map static resources from the /public folder to the /assets URL path
+GET     /color                      controllers.Colors.index
+POST    /colorSave                  controllers.Colors.save
+GET     /colorGetAll                controllers.Colors.getAllColors
+GET     /colorRandomGradient        controllers.Colors.getRandomGradient
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 

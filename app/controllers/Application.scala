@@ -5,6 +5,7 @@ import play.api.mvc._
 import org.apache.commons.codec.binary.Base64
 import play.api.data._
 import play.api.data.Forms._
+import services.Redis
 
 object Application extends Controller {
 

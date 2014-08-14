@@ -1,0 +1,32 @@
+@(startColor: String, endColor:String)
+<html>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="assets/stylesheets/main.css">
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="assets/javascripts/colors.js"></script>
+<script src="http://malsup.github.com/min/jquery.form.min.js"></script>
+
+<style>
+    #gradient {
+        height: 100px;
+        width: 100px;
+        display: inline-block;
+        background: linear-gradient(120deg, @startColor 30%, @endColor 70%);
+    }
+</style>
+<div class="alert alert-success alert-dismissable" style="position: fixed; width: 100%; top: 0px;">
+    <button type="button" class="close" aria-hidden="true"><span class="glyphicon glyphicon-ok"></span></button>
+    <p>Color was saved</p>
+</div>
+<div id="content">
+    <p class="title">Colors</p>
+    <p class="subtitle">track themes</p>
+    <form id="form" method="post" action="/">
+        <div id="gradient"></div>
+        <input name="startColor" id="startColor" value="@startColor"/>
+        <input name="endColor" id="endColor" value="@endColor"/>
+        <input type="button" class="btn btn-primary navbar-btn" id="save" style="  position: relative;top: 50%;transform: translateY(-50%);"value="Save"/>
+    </form>
+</div>
+<div id="allColors"></div>
+</html>
