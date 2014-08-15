@@ -15,12 +15,20 @@ showSaveConfirm = (data) ->
   setTimeout(fadeAlerts, 1000)
 
 makeNewGradient = (e) ->
-  newGradient = $("<div class='gradient'/>")
+  newGradient = $("<div id='gradient"+e.key+"'/>")
   newGradient.css("background","linear-gradient(120deg, "+e.startColor+ " 30%, "+e.endColor+" 70%)")
   newGradient.css("height","100px")
   newGradient.css("width","300px")
   newGradient.css("margin","auto")
   $("#allColors").append(newGradient)
+  deleteButton = $("<div id='"+e.key+"'>x</div>")
+  deleteButton.click(removeGradient)
+  $("#gradient"+e.key).append(deleteButton)
+
+removeGradient = (e) ->
+  key = $(e.target).attr("id")
+  $.ajax( {type: "GET", url: "/colorRemoveGradient/"+key, success: updateRandomColorsCallback})
+  getAllColors()
 
 showAllColors = (data) ->
   $("#allColors").empty()
@@ -29,6 +37,7 @@ showAllColors = (data) ->
 
 updateRandomColors = ->
   $.ajax( {type: "GET", url: "/colorRandomGradient", success: updateRandomColorsCallback})
+
 
 updateRandomColorsCallback = (data) ->
   gradient = $('#gradient')

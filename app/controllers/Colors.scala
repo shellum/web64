@@ -27,7 +27,7 @@ object Colors extends Controller {
     val startColor = userForm.bindFromRequest.get.startColor
     val endColor = userForm.bindFromRequest.get.endColor
     Redis.addColor(startColor, endColor)
-    Ok()
+    Ok("")
   }
 
   def getAllColors = Action {implicit request =>
@@ -42,7 +42,10 @@ object Colors extends Controller {
     "#" + hexString
   }
 
-  def removeRandomGradient
+  def removeGradient(key: String) = Action { implicit request =>
+    Redis.delVals(key)
+    Ok("")
+  }
 
   def getRandomGradient = Action { implicit request =>
     Ok(Json.toJson(Seq(getRandomHexColor,getRandomHexColor)))
