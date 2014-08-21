@@ -1,6 +1,6 @@
-GET     /                           controllers.Application.index
-POST    /encode                     controllers.Application.encode
-POST    /decode                     controllers.Application.decode
+GET     /                           controllers.Web64.index
+POST    /encode                     controllers.Web64.encode
+POST    /decode                     controllers.Web64.decode
 GET     /color                      controllers.Colors.index
 POST    /colorSave                  controllers.Colors.save
 GET     /colorGetAll                controllers.Colors.getAllColors

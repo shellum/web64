@@ -2,21 +2,16 @@ package controllers
 
 import play.api.data.Forms._
 import play.api.data._
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.Json
 import play.api.mvc._
 import services.Redis
-import scala.runtime.RichInt
 
 import scala.util.Random
 
 object Colors extends Controller {
 
   def index = Action {
-//    val l = Redis.getAllColors()
-//    val list = List.empty[String] ++ l
-//    if (list.size > 0) Ok(views.html.colors(list(0), list(1)))
-
-     Ok(views.html.colors(getRandomHexColor, getRandomHexColor))
+    Ok(views.html.colors(getRandomHexColor, getRandomHexColor))
   }
 
   def addColor(startColor: String, endColor: String) = {
@@ -30,7 +25,7 @@ object Colors extends Controller {
     Ok("")
   }
 
-  def getAllColors = Action {implicit request =>
+  def getAllColors = Action { implicit request =>
     val a = (Redis.getAllColors())
     Ok(a).as("text")
   }
@@ -38,7 +33,7 @@ object Colors extends Controller {
   def getRandomHexColor: String = {
     val random = new Random
     var hexString = ""
-    for (i <- 1 to 3) hexString += (random.nextInt(246)+15).toHexString
+    for (i <- 1 to 3) hexString += (random.nextInt(246) + 15).toHexString
     "#" + hexString
   }
 
@@ -48,7 +43,7 @@ object Colors extends Controller {
   }
 
   def getRandomGradient = Action { implicit request =>
-    Ok(Json.toJson(Seq(getRandomHexColor,getRandomHexColor)))
+    Ok(Json.toJson(Seq(getRandomHexColor, getRandomHexColor)))
   }
 
   val userForm = Form(

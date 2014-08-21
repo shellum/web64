@@ -1,13 +1,11 @@
 package controllers
 
-import play.api._
-import play.api.mvc._
 import org.apache.commons.codec.binary.Base64
-import play.api.data._
 import play.api.data.Forms._
-import services.Redis
+import play.api.data._
+import play.api.mvc._
 
-object Application extends Controller {
+object Web64 extends Controller {
 
   def index = Action {
     Ok(views.html.index("Enter text here for web safe base64 encoding/decoding."))

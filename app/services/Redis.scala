@@ -22,7 +22,6 @@ object Redis {
   def delVals(myKey: String) = {
     val jedis = new Jedis(host)
     var r = jedis.del(myKey)
-    System.out.println("***********DELETING: "+myKey + " r:"+r)
     r = 0
   }
 
@@ -39,9 +38,6 @@ object Redis {
     for (key <- keys) {
       val colors = jedis.lrange(key, 0, -1)
       if (colors.size() != 0) {
-        System.out.println("Gettingk: " + key)
-        System.out.println("Getting1: " + colors.get(0))
-        System.out.println("Getting2: " + colors.get(1))
         val cObj = Colors(colors.get(0), colors.get(1), key)
         list = cObj +: list
       }
@@ -64,6 +60,5 @@ object colorsFormat {
     jsArray
   }
 }
-
 
 case class Colors(startColor: String, endColor: String, key: String)
