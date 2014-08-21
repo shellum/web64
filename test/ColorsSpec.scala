@@ -1,13 +1,22 @@
 import org.junit.runner._
 import org.specs2.mutable._
 import org.specs2.runner._
-import play.api.libs.json.{JsPath, Reads, Json}
+import play.api.libs.json._
+import play.api.mvc.SimpleResult
 import play.api.test.Helpers._
 import play.api.test._
-import services.Colors
+import services.{Redis, Colors}
+import org.specs2.mock.Mockito
+import org.specs2.mutable._
 
-@RunWith(classOf[JUnitRunner])
-class ColorsSpec extends Specification {
+import scala.concurrent.Future
+
+class ColorsSpec extends PlaySpecification with Mockito {
+
+  class ColorScope {
+
+  }
+
   implicit val personFormat = Json.format[Colors]
   "Colors" should {
     "render its page" in new WithApplication {
@@ -17,11 +26,17 @@ class ColorsSpec extends Specification {
       contentAsString(home) must contain("Colors")
     }
 
-    "encode a string" in new WithApplication {
-      val home = route(FakeRequest(GET, "/colorGetAll")).get
-      val content = contentAsJson(home)
-      val m = Json.fromJson(content)
-      content must beEqualTo("YXNkZg")
+    "encode a string" in  {
+      val redisMock = mock[Redis]
+      redisMock.getAllColors() returns JsObject(Seq(
+        "startColor" -> JsString("a"),
+        "endColor" -> JsString("b"),
+        "key" -> JsString("c")
+      ))
+      val app = new controllers.Colors(redisMock)
+      val result: Future[SimpleResult] = app.getAllColors()(FakeRequest())
+      val json = contentAsJson(result)
+      json.toString() must beEqualTo("""{"startColor":"a","endColor":"b","key":"c"}""")
     }
 
   }

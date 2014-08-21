@@ -5,28 +5,28 @@ import play.api.data._
 import play.api.libs.json.Json
 import play.api.mvc._
 import services.Redis
-
+import javax.inject.{Singleton, Inject}
 import scala.util.Random
 
-object Colors extends Controller {
+class Colors @Inject() (redis: Redis) extends Controller {
 
   def index = Action {
     Ok(views.html.colors(getRandomHexColor, getRandomHexColor))
   }
 
   def addColor(startColor: String, endColor: String) = {
-    Redis.addColor(startColor, endColor)
+    redis.addColor(startColor, endColor)
   }
 
   def save = Action { implicit request =>
     val startColor = userForm.bindFromRequest.get.startColor
     val endColor = userForm.bindFromRequest.get.endColor
-    Redis.addColor(startColor, endColor)
+    redis.addColor(startColor, endColor)
     Ok("")
   }
 
   def getAllColors = Action { implicit request =>
-    val a = (Redis.getAllColors())
+    val a = (redis.getAllColors())
     Ok(a).as("text")
   }
 
@@ -38,7 +38,7 @@ object Colors extends Controller {
   }
 
   def removeGradient(key: String) = Action { implicit request =>
-    Redis.delVals(key)
+    redis.delVals(key)
     Ok("")
   }
 

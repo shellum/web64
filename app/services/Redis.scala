@@ -1,11 +1,14 @@
 package services
 
+import javax.inject.Singleton
+
 import play.api.libs.json._
 import redis.clients.jedis.Jedis
 
 import scala.collection.JavaConverters._
-
-object Redis {
+abstract class Db()
+@Singleton
+class Redis extends Db(){
 
   val host = "localhost"
 

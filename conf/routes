@@ -1,9 +1,9 @@
 GET     /                           controllers.Web64.index
 POST    /encode                     controllers.Web64.encode
 POST    /decode                     controllers.Web64.decode
-GET     /color                      controllers.Colors.index
-POST    /colorSave                  controllers.Colors.save
-GET     /colorGetAll                controllers.Colors.getAllColors
-GET     /colorRandomGradient        controllers.Colors.getRandomGradient
-GET     /colorRemoveGradient/:key   controllers.Colors.removeGradient(key: String)
+GET     /color                      @controllers.Colors.index
+POST    /colorSave                  @controllers.Colors.save
+GET     /colorGetAll                @controllers.Colors.getAllColors
+GET     /colorRandomGradient        @controllers.Colors.getRandomGradient
+GET     /colorRemoveGradient/:key   @controllers.Colors.removeGradient(key: String)
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
