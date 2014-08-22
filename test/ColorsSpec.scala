@@ -1,20 +1,24 @@
-import org.junit.runner._
-import org.specs2.mutable._
-import org.specs2.runner._
+import org.specs2.execute.Results
+import org.specs2.mock.Mockito
+import org.specs2.specification.Scope
 import play.api.libs.json._
 import play.api.mvc.SimpleResult
-import play.api.test.Helpers._
 import play.api.test._
-import services.{Redis, Colors}
-import org.specs2.mock.Mockito
-import org.specs2.mutable._
+import services.{Colors, Redis}
 
 import scala.concurrent.Future
 
-class ColorsSpec extends PlaySpecification with Mockito {
+class ColorsSpec extends PlaySpecification with Results with Mockito {
 
-  class ColorScope {
-
+  class ColorScope extends Scope {
+    val redisMock = mock[Redis]
+    redisMock.getAllColors() returns JsObject(Seq(
+      "startColor" -> JsString("a"),
+      "endColor" -> JsString("b"),
+      "key" -> JsString("c")
+    ))
+    val colorsString = """{"startColor":"a","endColor":"b","key":"c"}"""
+    val app = new controllers.Colors(redisMock)
   }
 
   implicit val personFormat = Json.format[Colors]
@@ -26,17 +30,10 @@ class ColorsSpec extends PlaySpecification with Mockito {
       contentAsString(home) must contain("Colors")
     }
 
-    "encode a string" in  {
-      val redisMock = mock[Redis]
-      redisMock.getAllColors() returns JsObject(Seq(
-        "startColor" -> JsString("a"),
-        "endColor" -> JsString("b"),
-        "key" -> JsString("c")
-      ))
-      val app = new controllers.Colors(redisMock)
+    "encode a string" in new ColorScope {
       val result: Future[SimpleResult] = app.getAllColors()(FakeRequest())
       val json = contentAsJson(result)
-      json.toString() must beEqualTo("""{"startColor":"a","endColor":"b","key":"c"}""")
+      json.toString() must beEqualTo(colorsString)
     }
 
   }
