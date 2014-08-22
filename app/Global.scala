@@ -1,4 +1,4 @@
-import com.google.inject.{Guice, AbstractModule}
+import com.google.inject.{AbstractModule, Guice}
 import play.api.GlobalSettings
 import services.{Db, Redis}
 

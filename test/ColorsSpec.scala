@@ -10,6 +10,8 @@ import scala.concurrent.Future
 
 class ColorsSpec extends PlaySpecification with Results with Mockito {
 
+  implicit val personFormat = Json.format[Colors]
+
   class ColorScope extends Scope {
     val redisMock = mock[Redis]
     redisMock.getAllColors() returns JsObject(Seq(
@@ -20,8 +22,6 @@ class ColorsSpec extends PlaySpecification with Results with Mockito {
     val colorsString = """{"startColor":"a","endColor":"b","key":"c"}"""
     val app = new controllers.Colors(redisMock)
   }
-
-  implicit val personFormat = Json.format[Colors]
   "Colors" should {
     "render its page" in new WithApplication {
       val home = route(FakeRequest(GET, "/color")).get

@@ -1,14 +1,16 @@
 package controllers
 
+import javax.inject.Inject
+
 import play.api.data.Forms._
 import play.api.data._
 import play.api.libs.json.Json
 import play.api.mvc._
 import services.Redis
-import javax.inject.{Singleton, Inject}
+
 import scala.util.Random
 
-class Colors @Inject() (redis: Redis) extends Controller {
+class Colors @Inject()(redis: Redis) extends Controller {
 
   def index = Action {
     Ok(views.html.colors(getRandomHexColor, getRandomHexColor))
