@@ -12,30 +12,26 @@ import scala.util.Random
 
 class Colors @Inject()(redis: Redis) extends Controller {
 
-  def index = Action {
+  def index = Action { implicit request =>
     Ok(views.html.colors(getRandomHexColor, getRandomHexColor))
-  }
-
-  def addColor(startColor: String, endColor: String) = {
-    redis.addColor(startColor, endColor)
   }
 
   def save = Action { implicit request =>
     val startColor = userForm.bindFromRequest.get.startColor
     val endColor = userForm.bindFromRequest.get.endColor
-    redis.addColor(startColor, endColor)
+    redis.addGradient(startColor, endColor)
     Ok("")
   }
 
   def getAllColors = Action { implicit request =>
-    val a = (redis.getAllColors())
+    val a = (redis.getAllGradients())
     Ok(a).as("text")
   }
 
   def getRandomHexColor: String = {
     val random = new Random
     var hexString = ""
-    for (i <- 1 to 3) hexString += (random.nextInt(246) + 15).toHexString
+    for (i <- 1 to 3) hexString += (random.nextInt(245) + 10).toHexString
     "#" + hexString
   }
 

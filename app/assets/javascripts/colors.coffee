@@ -27,7 +27,7 @@ makeNewGradient = (e) ->
 
 removeGradient = (e) ->
   key = $(e.target).attr("id")
-  $.ajax({type: "GET", url: "/colorRemoveGradient/" + key, success: updateRandomColorsCallback})
+  $.ajax({type: "GET", url: "/gradientsRemove/" + key, success: updateRandomColorsCallback})
   getAllColors()
 
 showAllColors = (data) ->
@@ -36,7 +36,7 @@ showAllColors = (data) ->
   x.forEach(makeNewGradient)
 
 updateRandomColors = ->
-  $.ajax({type: "GET", url: "/colorRandomGradient", success: updateRandomColorsCallback})
+  $.ajax({type: "GET", url: "/gradientsRandom", success: updateRandomColorsCallback})
 
 
 updateRandomColorsCallback = (data) ->
@@ -44,11 +44,11 @@ updateRandomColorsCallback = (data) ->
   gradient.css("background", "linear-gradient(120deg, " + data[0] + " 30%, " + data[1] + " 70%)")
 
 save = ->
-  $.ajax({type: "POST", url: "/colorSave", data: $("form").serialize(), success: showSaveConfirm})
+  $.ajax({type: "POST", url: "/gradientsSave", data: $("form").serialize(), success: showSaveConfirm})
   getAllColors()
   updateRandomColors()
 
 getAllColors = ->
-  $.ajax({type: "GET", url: "/colorGetAll", success: showAllColors})
+  $.ajax({type: "GET", url: "/gradientsGetAll", success: showAllColors})
 
 $ init
