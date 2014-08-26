@@ -38,7 +38,6 @@ showAllColors = (data) ->
 updateRandomColors = ->
   $.ajax({type: "GET", url: "/gradientsRandom", success: updateRandomColorsCallback})
 
-
 updateRandomColorsCallback = (data) ->
   gradient = $('#gradient')
   gradient.css("background", "linear-gradient(120deg, " + data[0] + " 30%, " + data[1] + " 70%)")

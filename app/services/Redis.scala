@@ -1,6 +1,6 @@
 package services
 
-import javax.inject.{Named, Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 
 import play.api.libs.json._
 import redis.clients.jedis.Jedis
@@ -10,7 +10,7 @@ import scala.collection.JavaConverters._
 abstract class Db()
 
 @Singleton
-class Redis @Inject() (@Named("Redis Host") host: String) extends Db() {
+class Redis @Inject()(@Named("Redis Host") host: String) extends Db() {
 
   var jedisInstance: Jedis = _
 

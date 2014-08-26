@@ -22,6 +22,7 @@ class ColorsSpec extends PlaySpecification with Results with Mockito {
     val colorsString = """{"startColor":"a","endColor":"b","key":"c"}"""
     val app = new controllers.Colors(redisMock)
   }
+
   "Colors" should {
     "render its page" in new ColorScope {
       val result: Future[SimpleResult] = app.index()(FakeRequest())
@@ -37,9 +38,9 @@ class ColorsSpec extends PlaySpecification with Results with Mockito {
     }
 
     "test GradientSave" in new ColorScope {
-      val result: Future[SimpleResult] = app.save()(FakeRequest().withFormUrlEncodedBody(("startColor","a"),("endColor","b")))
+      val result: Future[SimpleResult] = app.save()(FakeRequest().withFormUrlEncodedBody(("startColor", "a"), ("endColor", "b")))
       status(result) must be equalTo (OK)
-      there was one(redisMock).addGradient(any[String],any[String])
+      there was one(redisMock).addGradient(any[String], any[String])
     }
 
     "get random hex colors" in new ColorScope {
@@ -52,7 +53,7 @@ class ColorsSpec extends PlaySpecification with Results with Mockito {
       color2.charAt(0) must beEqualTo(hexColorHeader)
       color1.length must beEqualTo(hexColorLength)
       color2.length must beEqualTo(hexColorLength)
-      color1 must not equalTo(color2)
+      color1 must not equalTo (color2)
     }
 
     "remove a gradient" in new ColorScope {

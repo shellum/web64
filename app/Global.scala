@@ -1,7 +1,6 @@
 import com.google.inject.name.Names
-import com.google.inject.{TypeLiteral, AbstractModule, Guice}
+import com.google.inject.{AbstractModule, Guice}
 import play.api.GlobalSettings
-import redis.clients.jedis.Jedis
 import services.{Db, Redis}
 
 object Global extends GlobalSettings {
