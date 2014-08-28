@@ -1,5 +1,6 @@
 @text-tint: #007;
 @app-width: 500px;
+@col-width: 300px;
 
 textarea {
   float: left;
@@ -21,12 +22,17 @@ textarea {
   color: @text-tint
 }
 
+.col {
+  width: @col-width;
+  margin: auto
+}
+
 .subtitle {
   font-size: medium;
   color: @text-tint
 }
 
-#content {
+.content {
   width: @app-width;
   margin: 50px auto 0px auto
 }
