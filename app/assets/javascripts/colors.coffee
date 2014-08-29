@@ -2,6 +2,7 @@ init = ->
   $("#save").click(save)
   hideAlerts()
   $(".close").click(hideAlerts)
+  $("#refresh").click(updateRandomColors)
   getAllColors()
   updateRandomColors()
 
