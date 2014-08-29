@@ -3,7 +3,7 @@ package services
 import javax.inject.{Inject, Named, Singleton}
 
 import play.api.libs.json._
-import redis.clients.jedis.Jedis
+import redis.clients.jedis.{JedisPoolConfig, JedisPool, Jedis}
 
 import scala.collection.JavaConverters._
 
@@ -12,37 +12,43 @@ abstract class Db()
 @Singleton
 class Redis @Inject()(@Named("Redis Host") host: String) extends Db() {
 
-  var jedisInstance: Jedis = null
+  var jedisPool: JedisPool = null
 
-  def setJedis(jedis: Jedis) = {
-    jedisInstance = jedis
+  def setJedis(jedisPool: JedisPool) = {
+    this.jedisPool = jedisPool
   }
 
   def getJedis(): Jedis = {
-    if (jedisInstance == null)
-      jedisInstance = new Jedis(host)
-    jedisInstance
+    if (jedisPool == null)
+      jedisPool = new JedisPool(new JedisPoolConfig(), host)
+    jedisPool.getResource
   }
 
   def delVals(myKey: String) = {
-    getJedis().del(myKey)
+    val jedis = getJedis()
+    jedis.del(myKey)
+    jedis.close()
   }
 
   def addGradient(myVal1: String, myVal2: String) = {
-    val myKey = getJedis().incr("primary")
-    getJedis().lpush("color" + myKey, myVal1, myVal2)
+    val jedis = getJedis()
+    val myKey = jedis.incr("primary")
+    jedis.lpush("color" + myKey, myVal1, myVal2)
+    jedis.close()
   }
 
   def getAllGradients(): JsValue = {
-    val keys = getJedis().keys("color*").asScala.toSet
+    val jedis = getJedis()
+    val keys = jedis.keys("color*").asScala.toSet
     var list = List[Colors]()
     for (key <- keys) {
-      val colors = getJedis().lrange(key, 0, -1)
+      val colors = jedis.lrange(key, 0, -1)
       if (colors.size() != 0) {
         val cObj = Colors(colors.get(0), colors.get(1), key)
         list = cObj +: list
       }
     }
+    jedis.close()
     colorsFormat.writes(list)
   }
 

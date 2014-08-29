@@ -13,7 +13,7 @@ import scala.util.Random
 class Colors @Inject()(redis: Redis) extends Controller {
 
   def index = Action { implicit request =>
-    Ok(views.html.colors(getRandomHexColor, getRandomHexColor))
+    Ok(views.html.colors())
   }
 
   def save = Action { implicit request =>
